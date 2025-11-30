@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lunar Framework</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <h1>PDHII: Top-Down Lunar Framework</h1>
+    <!-- <p class="notes">Notes: Regolith availability is not a concern. The entire Lunar surface is
+        covered in regolith.<br><br>
+        Manufacture of nuclear fuel on the Moon is an emerging area of research, with the consensus being that
+        it will be better to transport the fuel from Earth, given its high energy density.<br><br>
+        One other observation is that, as the Lunar environment develops over the coming decades, technologies will also
+        develop and new information about the Moon will be available. The uncertainties that this introduces are too
+        high to predict things like energy budgets or resource extraction rates with any accuracy.<br><br>For example,
+        processes
+        to extract nuclear fuel from regolith are not exactly known, so it is futile for this tool to have the
+        functionality
+        to determine energy budgets based on estimated Helium-3 availability at the settlement site.<br><br>
+        The solution here is to allow the user to input an instantaneous 'scenario' (since these values/rates can be
+        accurately known),
+        and the framework tool will assume that the rates are constant over time for any predictions it makes.<br><br>
+        The time step is 1 week.<br><br>
+        Future work could include implementing in MBSE somehow.<br><br> -->
+        
+    </p>
+    <div class="container">
+        <div class="inputs">
+                <h2>USER INPUT</h2>
+                <form id="inputForm">
+
+                    <h3>Population</h3>
+
+                    <label for="growthModel">Growth model</label>
+                        <select id="growthModel" name="growthModel">
+                            <option value="linear">Linear</option>
+                            <option value="exponential">Exponential</option>
+                            <option value="logistic">Logistic (S-curve)</option>
+                        </select>
+                    <br>
+                    <br>
+                    <label for="initialPopulation">Initial population</label>
+                    <input type="number" id="initialPopulation" name="initialPopulation">
+                
+                    <div id="linearInputs">
+                    <label for="arrivalRate">Human arrival rate (people per Earth day)</label>
+                    <input type="number" id="arrivalRate" name="arrivalRate">
+
+                    <label for="departureRate">Human departure rate (people per Earth day)</label>
+                    <input type="number" id="departureRate" name="departureRate">
+                    </div>
+
+                    <div id="exponentialInputs">
+                    <label for="exponentialGrowthRate">Exponential growth rate (per day, e.g., 0.01 for 1% per day)</label>
+                    <input type="number" id="exponentialGrowthRate" name="exponentialGrowthRate">
+                    </div>
+                    
+                    <div id="logisticInputs">
+                    <label for="logisticGrowthRate">Logistic growth rate (maximum rate at which the population can
+                        grow when there are no limits on resources, e.g., 0.01 for 1% per day)</label>
+                    <input type="number" id="logisticGrowthRate" name="logisticGrowthRate">
+                    
+                    <label for="carryingCapacity">Carrying capacity (max population level)</label>
+                    <input type="number" id="carryingCapacity" name="carryingCapacity">
+
+                    </div>
+
+
+                    <label for="volumePerPerson">Habitation volume required per person (m<sup>3</sup>)</label>
+                    <input type="number" placeholder="30" id="volumePerPerson" name="volumePerPerson">
+
+                    <form id="infraForm">
+                        <h3>Add Infrastructure Elements</h3>
+                    
+                        <label for="infraName">Infrastructure Name</label>
+                        <input type="text" id="infraName" name="infraName">
+                    
+                        <label for="embodiedMaterials">Embodied Materials</label>
+                        <input type="text" id="embodiedMaterials" name="embodiedMaterials">
+                    
+                        <label for="mass">Mass (kg)</label>
+                        <input type="number" id="mass" name="mass">
+                    
+                        <label for="volume">Volume (m³)</label>
+                        <input type="number" id="volume" name="volume">
+
+                        <label for="energyNeeds">Energy needs (Wh/day)</label>
+                        <input type="number" id="energyNeeds" name="energyNeeds">
+
+                        <label for="infraOxygenReq">Oxygen needs (kg/day)</label>
+                        <input type="number" id="infraOxygenReq" name="infraOxygenReq">
+                    
+                        <label for="maintenanceNeeds">Maintenance needs (hours/day)</label>
+                        <input type="number" id="maintenanceNeeds" name="maintenanceNeeds">
+                    
+                        <button type="button" id="submitInfraBtn">Submit Infrastructure</button>
+                    </form>
+                        
+
+                    <h3>Settlement Site <br><br>Use average values over 1km radius around site. Leave blank if value
+                        unknown.
+                        The colours in the image indicate different materials.</h3>
+                    <img class="moonimage" src="images\Moon_Crescent_-_False_Color_Mosaic.jpg">
+
+                    <h4>Water Ice Availability</h4>
+
+                    <label for="waterIceAvailability">Water Ice (kg)</label>
+                    <input type="number" id="waterIceAvailability" name="waterIceAvailability">
+
+                    <h4>Temperatures</h4>
+
+                    <label for="maxTemp">Maximum Temperature (K)</label>
+                    <input type="number" id="maxTemp" name="maxTemp">
+
+                    <label for="minTemp">Minimum Temperature (K)</label>
+                    <input type="number" id="minTemp" name="minTemp">
+
+                    <label for="averageTemp">Average Temperature (K)</label>
+                    <input type="number" id="averageTemp" name="averageTemp">
+
+                    <h4>Solar power Availability (% mean TSI = 1363.03W/m^2)</h4>
+                    <label for="earthToMoonTransport"></label>
+                    <input type="number" id="earthToMoonTransport" name="earthToMoonTransport">
+                    <p>https://www.e3s-conferences.org/articles/e3sconf/pdf/2018/24/e3sconf_solina2018_00053.pdf these
+                        data are symmetric wrt the Lunar equator.</p>
+                    <img src="images/lunartable.png" style="max-width:600px" />
+
+                    <h4>Cargo Transport</h4>
+
+                    <label for="earthToMoonTransport">Earth-Moon Transport Capacity (kg/day)</label>
+                    <input type="number" id="earthToMoonTransport" name="earthToMoonTransport">
+
+                    
+                
+                    <label for="endTime">Simulation end time (days)</label>
+                    <input type="number" id="endTime" name="endTime" value="30">
+                <button type="button" id="submitBtn">Submit</button>
+                </form>
+        </div>
+        <div class="outputs">
+            <h2>OUTPUT</h2>
+
+            <canvas id="population"></canvas>
+            <canvas id="oxygenRequirement"></canvas>
+            <p>NASA: The average person needs around 0.84kg of oxygen per day to survive<br><br>
+                https://www.nasa.gov/wp-content/uploads/2009/07/166504main_survival.pdf?emrc=7b666c</p>
+            <!-- Your output fields go here -->
+            <canvas id="volumeRequirement"></canvas>
+            <p id="infraList"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
