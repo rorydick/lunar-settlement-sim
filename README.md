@@ -4,8 +4,6 @@ A top-down parametric simulation tool designed to model the resource and infrast
 
 ![Status](https://img.shields.io/badge/Status-Prototype-orange) ![Stack](https://img.shields.io/badge/Tech-JS%20%7C%20Chart.js-blue)
 
-## 🔗 [Live Simulation Demo](https://rorydick.github.io/lunar-settlement-sim)
-
 ## 🧮 Capabilities
 
 This framework integrates multiple physics and operational models to provide a first-order estimation of settlement sustainability.
